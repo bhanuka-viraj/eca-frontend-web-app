@@ -1,87 +1,105 @@
-# EduCloud Web Application - React & Vite Cloud-Native Frontend
+# EduCloud Enterprise - Course & Learning Management SaaS Platform
 
-## Student & Coursework Metadata
-- **Student Name:** J P Bhanuka Viraj Madhuranga
+An enterprise-grade, ultra-modern Course & Learning Management SaaS platform built with **React 18**, **Vite**, **Tailwind CSS**, and **Lucide Icons**, integrated with a 3-tier Spring Boot microservices backend deployed on **Google Cloud Platform (GCP)**.
+
+---
+
+## 🏛️ Academic & Cloud Architecture Metadata
+- **Lead Developer:** J P Bhanuka Viraj Madhuranga
 - **Student ID:** 241711105
 - **GCP Project ID:** `enterprise-cloud-module-503705`
-- **GCP Region:** `us-central1`
-- **Cloud Run Service (Frontend):** `eca-frontend-app`
-- **Live Cloud Run URL:** [https://eca-frontend-app-535026634701.us-central1.run.app](https://eca-frontend-app-535026634701.us-central1.run.app)
-- **API Gateway Service:** `eca-api-gateway`
-- **Live API Gateway URL:** [https://eca-api-gateway-535026634701.us-central1.run.app](https://eca-api-gateway-535026634701.us-central1.run.app)
+- **GCP Region:** `us-central1` (Iowa, USA)
+- **Frontend Service (Cloud Run):** `eca-frontend-app`
+- **Frontend URL:** [https://eca-frontend-app-535026634701.us-central1.run.app](https://eca-frontend-app-535026634701.us-central1.run.app)
+- **API Gateway Service (Cloud Run):** `eca-api-gateway`
+- **API Gateway URL:** [https://eca-api-gateway-535026634701.us-central1.run.app](https://eca-api-gateway-535026634701.us-central1.run.app)
 
 ---
 
-## 🚀 Architecture Overview
-This is a modern, responsive Single Page Application (SPA) built with **React 18/19**, **Vite**, **Tailwind CSS**, and **Lucide React**. It provides a unified portal to interact with backend microservices routed through the Spring Cloud API Gateway on Google Cloud Platform.
+## ✨ Features & Component Architecture
 
-### 🌐 Microservices Integrated
-1. **User Service (`/api/v1/users`):**
-   - **Database:** Google Cloud SQL (MySQL 8.0)
-   - **Features:** User registration, IAM role management (Student, Instructor, Admin), search & filter, delete.
-2. **Course Service (`/api/v1/courses`):**
-   - **Database:** MongoDB Atlas (NoSQL Document Store)
-   - **Features:** Rich course catalog publishing, categorization, tag queries, thumbnail attachments.
-3. **Media Service (`/api/v1/media/upload`):**
-   - **Storage:** Google Cloud Storage (GCS Bucket: `eca-media-assets-enterprise-cloud-module-503705`)
-   - **Features:** Drag-and-drop file upload with progress bar, image preview, public GCS URL generator, clipboard copy.
+### 1. 🔍 'Explore Courses'
+- **Coursera / Udemy / Linear Aesthetic:** Modern course library with dark slate/indigo theme and glassmorphism.
+- **Category Filtering & Search:** Filter by *Cloud, DevOps, Java, AI, Microservices* with live search.
+- **Rich Course Cards:** High-res GCS thumbnails, dynamic technology tags (`#GCP`, `#Kubernetes`, `#Docker`), instructor badges, and difficulty ratings.
+- **Interactive Syllabus Viewer:** Slideout/modal displaying comprehensive course modules, lesson breakdowns, duration, and 1-click enterprise enrollment.
+
+### 2. 🎬 'Instructor Studio'
+- **Course Creation Wizard:** Step-by-step course authoring form mapped to MongoDB Atlas document schemas.
+- **Real-Time Live Card Preview:** Live rendering of the student card as instructors draft title, syllabus, and metadata.
+- **Cloud Storage Media Hub (GCS):** Drag-and-drop file uploader with live streaming progress bar (0% -> 100%), instant thumbnail preview, and 1-click auto-binding to the course draft.
+
+### 3. 👥 'Member Directory'
+- **Cloud SQL IAM User Management:** Relational member directory powered by Google Cloud SQL (MySQL 8.0).
+- **RBAC Role Filtering:** Quick filtering by *Students, Instructors, Admins*.
+- **Onboard Member Modal:** Form validation for registering new faculty and student profiles.
+
+### 4. ⚡ 'Cloud Infrastructure & Telemetry'
+- **Live Gateway Health Checker:** Real-time ping test with exact round-trip response latency (ms) and HTTP status codes.
+- **Dynamic Gateway Switching:** Instantly switch between `localhost:8080`, GCP Cloud Run URL, or GCP Load Balancer Static IP.
+- **Microservices Topology Map:** Visual mapping of Spring Cloud Gateway (:8080) -> User Service (:8081) -> Course Service (:8082) -> Media Service (:8083).
+- **REST Routing Table:** Active reverse proxy route specifications with interactive ping tests.
+
+### 5. 🛡️ 'System Information Popover'
+- Discreet, accessible modal containing academic metadata, GCP specs, and Docker Nginx container runtime specs.
 
 ---
 
-## 🛠️ Key Frontend Components
-- `src/components/Navbar.jsx`: Brand banner, student/GCP badges, live gateway health status with latency ping.
-- `src/components/GatewayConfig.jsx`: Live Gateway URL selector with environment presets (Localhost, Cloud Run, Load Balancer) and latency connection tester.
-- `src/components/UserManagement.jsx`: Cloud SQL MySQL user management CRUD interface with real-time statistics.
-- `src/components/CourseCatalog.jsx`: MongoDB course catalog manager with search, category filtering, and thumbnail rendering.
-- `src/components/MediaUploader.jsx`: GCS upload dropzone with upload percentage progress and thumbnail sharing.
-- `src/components/ArchitectureModal.jsx`: Interactive modal detailing the 3-Tier Enterprise Cloud Microservices architecture.
-- `src/services/api.js`: Centralized Axios client supporting dynamic Gateway URL switching.
+## 🛠️ Tech Stack
+- **Frontend Framework:** React 18 (Hooks, Suspense, Error Boundaries)
+- **Bundler / Tooling:** Vite 6
+- **Styling:** Tailwind CSS 3 with custom glassmorphism and animations
+- **Iconography:** Lucide React
+- **HTTP Client:** Axios with dynamic base URL interceptors
+- **Web Server:** Nginx Alpine configured for SPA routing (`try_files $uri $uri/ /index.html`) on Port 8080
 
 ---
 
 ## 💻 Local Development Setup
 
-### Prerequisites
-- Node.js 18+ or 20+
-- npm or yarn
-
-### Installation & Run
 ```bash
 # 1. Install dependencies
 npm install
 
-# 2. Run local development server (Vite)
+# 2. Run local development server
 npm run dev
-# App will run at http://localhost:3000
 
-# 3. Build for production
+# 3. Build production bundle (verified 0 errors)
 npm run build
 
-# 4. Preview production build locally
+# 4. Preview production build
 npm run preview
 ```
 
 ---
 
-## 🐳 Docker Multi-Stage Build & Cloud Run Deployment
+## 🐳 Docker Multi-Stage Build & Cloud Run
 
-The application uses a multi-stage Docker build (`node:20-alpine` -> `nginx:alpine`) listening on container port **8080** as required by Google Cloud Run.
+The repository includes an optimized multi-stage `Dockerfile`:
+```dockerfile
+# Stage 1: Build static assets with Node 20
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY package.json ./
+RUN npm install
+COPY . ./
+RUN npm run build
 
-### Local Docker Build & Run
-```bash
-# Build the Docker image
-docker build -t eca-frontend-web-app:latest .
-
-# Run container on port 8080
-docker run -d -p 8080:8080 eca-frontend-web-app:latest
+# Stage 2: Serve with Nginx Alpine on Port 8080
+FROM nginx:alpine
+RUN rm -rf /usr/share/nginx/html/*
+COPY --from=builder /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 8080
+CMD ["nginx", "-g", "daemon off;"]
 ```
 
-### Google Cloud Run Deployment (Serverless / PaaS)
+### Deploy to Google Cloud Run
 ```bash
-# 1. Build and push image using Google Cloud Build
+# Build container with Google Cloud Build
 gcloud builds submit --tag gcr.io/enterprise-cloud-module-503705/frontend-app
 
-# 2. Deploy to Cloud Run
+# Deploy to Cloud Run Serverless
 gcloud run deploy eca-frontend-app \
   --image gcr.io/enterprise-cloud-module-503705/frontend-app \
   --platform managed \

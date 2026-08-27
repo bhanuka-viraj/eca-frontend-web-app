@@ -2,9 +2,9 @@ import axios from 'axios';
 
 // Default gateway URLs
 export const DEFAULT_GATEWAY_URLS = [
-  { label: 'Local API Gateway (Port 8080)', url: 'http://localhost:8080' },
-  { label: 'GCP Cloud Run Gateway', url: 'https://eca-api-gateway-535026634701.us-central1.run.app' },
-  { label: 'GCP Load Balancer (Static IP)', url: 'http://34.118.224.120:8080' }
+  { label: 'Local API Gateway (Port 8080)', url: 'http://localhost:8080', env: 'Local Dev' },
+  { label: 'GCP Cloud Run Gateway', url: 'https://eca-api-gateway-535026634701.us-central1.run.app', env: 'Cloud Run' },
+  { label: 'GCP Load Balancer (Static IP)', url: 'http://34.118.224.120:8080', env: 'Production' }
 ];
 
 const STORAGE_KEY = 'educloud_gateway_url';
@@ -22,7 +22,7 @@ export const setGatewayUrl = (url) => {
 // Create dynamic Axios instance
 const createApiClient = () => {
   const baseURL = getGatewayUrl();
-  const client = axios.create({
+  return axios.create({
     baseURL,
     timeout: 10000,
     headers: {
@@ -30,11 +30,9 @@ const createApiClient = () => {
       'Accept': 'application/json'
     }
   });
-
-  return client;
 };
 
-// Health Check with Latency
+// Real-Time Health Check with Latency measurement
 export const checkGatewayHealth = async (customUrl = null) => {
   const targetUrl = (customUrl || getGatewayUrl()).replace(/\/+$/, '');
   const startTime = performance.now();
@@ -51,25 +49,37 @@ export const checkGatewayHealth = async (customUrl = null) => {
       url: targetUrl
     };
   } catch (error) {
-    // Try fallback check on root or /api/v1/users if actuator is blocked or not exposed
+    // Fallback: Check if /api/v1/courses or /api/v1/users is reachable
     try {
-      const fallbackRes = await axios.get(`${targetUrl}/api/v1/users`, { timeout: 4000 });
+      const fallbackRes = await axios.get(`${targetUrl}/api/v1/courses`, { timeout: 4000 });
       const latency = Math.round(performance.now() - startTime);
       return {
         success: true,
         status: fallbackRes.status,
-        data: { status: 'UP (via User API)' },
+        data: { status: 'UP (via Course API route)' },
         latency,
         url: targetUrl
       };
     } catch (fallbackError) {
-      const latency = Math.round(performance.now() - startTime);
-      return {
-        success: false,
-        error: error.message || 'Connection failed',
-        latency,
-        url: targetUrl
-      };
+      try {
+        const userFallback = await axios.get(`${targetUrl}/api/v1/users`, { timeout: 3000 });
+        const latency = Math.round(performance.now() - startTime);
+        return {
+          success: true,
+          status: userFallback.status,
+          data: { status: 'UP (via User API route)' },
+          latency,
+          url: targetUrl
+        };
+      } catch (finalError) {
+        const latency = Math.round(performance.now() - startTime);
+        return {
+          success: false,
+          error: error.message || 'Connection failed',
+          latency,
+          url: targetUrl
+        };
+      }
     }
   }
 };
