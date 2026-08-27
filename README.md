@@ -8,22 +8,22 @@
 
 ---
 
-## Description
-Frontend single page application for the EduCloud portal, connecting to the Spring Cloud API Gateway on Google Cloud Platform.
+## Project Description
+Frontend Single Page Application for the EduCloud portal, providing a responsive interface for user registration, course publishing, and cloud media uploads via the Spring Cloud API Gateway.
 
-### Features
-- User Registration & Listing (Cloud SQL MySQL via User Service)
-- Course Publishing & Discovery (MongoDB via Course Service)
-- Media File Upload to GCS Bucket (Google Cloud Storage via Media Service)
+### Consumed Backend Microservices
+1. **User Service (Cloud SQL):** User registration and profile listing (/api/v1/users).
+2. **Course Service (MongoDB):** Course catalog creation and search (/api/v1/courses).
+3. **Media Service (Cloud Storage):** Course thumbnail upload to GCS Bucket (/api/v1/media/upload).
 
 ---
 
-## Deployment (Cloud Run - PaaS/Serverless)
-```bash
+## Deployment (Google Cloud Run - PaaS / Serverless)
+`ash
 gcloud builds submit --tag gcr.io/enterprise-cloud-module-503705/frontend-app
 gcloud run deploy eca-frontend-app \
   --image gcr.io/enterprise-cloud-module-503705/frontend-app \
   --platform managed \
   --allow-unauthenticated \
   --region us-central1
-```
+`
