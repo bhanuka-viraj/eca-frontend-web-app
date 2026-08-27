@@ -2,19 +2,27 @@ import axios from 'axios';
 
 // Default gateway presets
 export const DEFAULT_GATEWAY_URLS = [
-  { label: 'Local Development Server', url: 'http://localhost:8080', env: 'Localhost' },
-  { label: 'Cloud Production API', url: 'https://eca-api-gateway-535026634701.us-central1.run.app', env: 'Cloud Run' },
-  { label: 'Enterprise Gateway (Static IP)', url: 'http://34.118.224.120:8080', env: 'Production' }
+  { label: 'Cloud Run Proxy (HTTPS Same-Origin)', url: '', env: 'Production Cloud Run' },
+  { label: 'Cloud Gateway (Direct VM)', url: 'http://34.134.152.53:8080', env: 'Compute Engine' },
+  { label: 'Local Development Server', url: 'http://localhost:8080', env: 'Localhost' }
 ];
 
 const STORAGE_KEY = 'educloud_gateway_url';
 
 export const getGatewayUrl = () => {
-  return localStorage.getItem(STORAGE_KEY) || DEFAULT_GATEWAY_URLS[0].url;
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved !== null && saved !== undefined) {
+    return saved;
+  }
+  // Auto-detect production vs localhost
+  if (typeof window !== 'undefined' && window.location.protocol === 'https:') {
+    return '';
+  }
+  return DEFAULT_GATEWAY_URLS[1].url;
 };
 
 export const setGatewayUrl = (url) => {
-  const sanitized = url.replace(/\/+$/, '');
+  const sanitized = url ? url.replace(/\/+$/, '') : '';
   localStorage.setItem(STORAGE_KEY, sanitized);
   return sanitized;
 };
