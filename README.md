@@ -1,57 +1,43 @@
-# EduCloud Enterprise - Course & Learning Management SaaS Platform
+# EduSphere LMS - Enterprise Learning & Skills Platform
 
-An enterprise-grade, ultra-modern Course & Learning Management SaaS platform built with **React 18**, **Vite**, **Tailwind CSS**, and **Lucide Icons**, integrated with a 3-tier Spring Boot microservices backend deployed on **Google Cloud Platform (GCP)**.
-
----
-
-## 🏛️ Academic & Cloud Architecture Metadata
-- **Lead Developer:** J P Bhanuka Viraj Madhuranga
-- **Student ID:** 241711105
-- **GCP Project ID:** `enterprise-cloud-module-503705`
-- **GCP Region:** `us-central1` (Iowa, USA)
-- **Frontend Service (Cloud Run):** `eca-frontend-app`
-- **Frontend URL:** [https://eca-frontend-app-535026634701.us-central1.run.app](https://eca-frontend-app-535026634701.us-central1.run.app)
-- **API Gateway Service (Cloud Run):** `eca-api-gateway`
-- **API Gateway URL:** [https://eca-api-gateway-535026634701.us-central1.run.app](https://eca-api-gateway-535026634701.us-central1.run.app)
+A modern, 100% business-centric, pure light-themed Course & Learning Management System (LMS) platform inspired by the clean aesthetics of Coursera, Udemy, and Skillshare. Built with **React 18**, **Vite**, **Tailwind CSS**, and **Lucide Icons**, deployed on **Google Cloud Platform (GCP)** via Docker & Google Cloud Run.
 
 ---
 
-## ✨ Features & Component Architecture
+## 🌟 Core Business Features
 
-### 1. 🔍 'Explore Courses'
-- **Coursera / Udemy / Linear Aesthetic:** Modern course library with dark slate/indigo theme and glassmorphism.
-- **Category Filtering & Search:** Filter by *Cloud, DevOps, Java, AI, Microservices* with live search.
-- **Rich Course Cards:** High-res GCS thumbnails, dynamic technology tags (`#GCP`, `#Kubernetes`, `#Docker`), instructor badges, and difficulty ratings.
-- **Interactive Syllabus Viewer:** Slideout/modal displaying comprehensive course modules, lesson breakdowns, duration, and 1-click enterprise enrollment.
+### 1. 🎓 Explore Courses
+- **Curated Course Library:** Discover professional courses across *Software Engineering, Cloud Computing, Data Science, Design, and Business*.
+- **Rich Course Cards:** Thumbnail previews, difficulty ratings (Beginner, Intermediate, Advanced), student counts, star ratings (e.g. ⭐ 4.9), and estimated durations.
+- **Interactive Syllabus Modal:** In-depth module breakdowns, lesson timelines, and 1-click course enrollment.
 
-### 2. 🎬 'Instructor Studio'
-- **Course Creation Wizard:** Step-by-step course authoring form mapped to MongoDB Atlas document schemas.
-- **Real-Time Live Card Preview:** Live rendering of the student card as instructors draft title, syllabus, and metadata.
-- **Cloud Storage Media Hub (GCS):** Drag-and-drop file uploader with live streaming progress bar (0% -> 100%), instant thumbnail preview, and 1-click auto-binding to the course draft.
+### 2. 📖 My Learning
+- **Student Dashboard:** Track your enrolled courses and view progress percentages in real-time.
+- **Interactive Course Player:** Lecture player interface with interactive lesson checklists that dynamically advance course completion.
+- **Certification:** Official certificate of completion unlocks upon reaching 100% progress.
 
-### 3. 👥 'Member Directory'
-- **Cloud SQL IAM User Management:** Relational member directory powered by Google Cloud SQL (MySQL 8.0).
-- **RBAC Role Filtering:** Quick filtering by *Students, Instructors, Admins*.
-- **Onboard Member Modal:** Form validation for registering new faculty and student profiles.
+### 3. 👨‍🏫 Instructor Studio
+- **Course Authoring Wizard:** Clean publishing form for Course Title, Category, Difficulty, Tags, Duration, and Detailed Description.
+- **Media Upload Dropzone:** Drag-and-drop cover image upload with live streaming progress bar that seamlessly attaches the image to the course.
+- **Live Student Preview:** Real-time preview card showing how your course will appear to students.
 
-### 4. ⚡ 'Cloud Infrastructure & Telemetry'
-- **Live Gateway Health Checker:** Real-time ping test with exact round-trip response latency (ms) and HTTP status codes.
-- **Dynamic Gateway Switching:** Instantly switch between `localhost:8080`, GCP Cloud Run URL, or GCP Load Balancer Static IP.
-- **Microservices Topology Map:** Visual mapping of Spring Cloud Gateway (:8080) -> User Service (:8081) -> Course Service (:8082) -> Media Service (:8083).
-- **REST Routing Table:** Active reverse proxy route specifications with interactive ping tests.
+### 4. 👥 Faculty & Students Directory
+- **Academy Member Management:** Clean directory for managing students, faculty instructors, and administrators.
+- **Role Filters & Metrics:** Instant breakdown of total academy members, active students, and verified faculty.
+- **Onboard Member Modal:** Form for registering new students and faculty members.
 
-### 5. 🛡️ 'System Information Popover'
-- Discreet, accessible modal containing academic metadata, GCP specs, and Docker Nginx container runtime specs.
+### 5. ⚙️ Discreet API Connection Settings
+- **Real-Time Health Probe:** Discreet connection status badge in the navbar and footer with live latency (ms).
+- **Dynamic Endpoint Switching:** Configure and switch between local development server and cloud production endpoints.
 
 ---
 
-## 🛠️ Tech Stack
-- **Frontend Framework:** React 18 (Hooks, Suspense, Error Boundaries)
-- **Bundler / Tooling:** Vite 6
-- **Styling:** Tailwind CSS 3 with custom glassmorphism and animations
-- **Iconography:** Lucide React
-- **HTTP Client:** Axios with dynamic base URL interceptors
-- **Web Server:** Nginx Alpine configured for SPA routing (`try_files $uri $uri/ /index.html`) on Port 8080
+## 🛠️ Technology Stack
+
+- **Frontend:** React 18, Vite 6, Tailwind CSS 3, Lucide React Icons
+- **HTTP Client:** Axios with dynamic base URL configuration and health probing
+- **Containerization:** Multi-stage Dockerfile (Node 20 Alpine builder -> Nginx Alpine server on Port 8080)
+- **Deployment:** Google Cloud Run (Serverless Container Platform)
 
 ---
 
@@ -75,7 +61,8 @@ npm run preview
 
 ## 🐳 Docker Multi-Stage Build & Cloud Run
 
-The repository includes an optimized multi-stage `Dockerfile`:
+The repository includes a production-optimized multi-stage `Dockerfile`:
+
 ```dockerfile
 # Stage 1: Build static assets with Node 20
 FROM node:20-alpine AS builder

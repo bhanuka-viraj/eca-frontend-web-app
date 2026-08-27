@@ -4,15 +4,9 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        slate: {
-          850: '#0f172a',
-          900: '#0b1120',
-          950: '#060a12',
-        },
         brand: {
           50: '#eef2ff',
           100: '#e0e7ff',
@@ -26,18 +20,13 @@ export default {
           900: '#312e81',
           950: '#1e1b4b',
         },
-        cyan: {
-          450: '#00d2ff',
-        }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
       },
       animation: {
-        'pulse-subtle': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'fade-in': 'fadeIn 0.25s ease-out',
-        'slide-up': 'slideUp 0.3s ease-out',
+        'fade-in': 'fadeIn 0.2s ease-out',
+        'slide-up': 'slideUp 0.25s ease-out',
       },
       keyframes: {
         fadeIn: {
@@ -45,7 +34,7 @@ export default {
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
         slideUp: {
-          '0%': { opacity: '0', transform: 'translateY(16px)' },
+          '0%': { opacity: '0', transform: 'translateY(12px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         }
       }

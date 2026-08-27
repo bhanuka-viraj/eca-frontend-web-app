@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-// Default gateway URLs
+// Default gateway presets
 export const DEFAULT_GATEWAY_URLS = [
-  { label: 'Local API Gateway (Port 8080)', url: 'http://localhost:8080', env: 'Local Dev' },
-  { label: 'GCP Cloud Run Gateway', url: 'https://eca-api-gateway-535026634701.us-central1.run.app', env: 'Cloud Run' },
-  { label: 'GCP Load Balancer (Static IP)', url: 'http://34.118.224.120:8080', env: 'Production' }
+  { label: 'Local Development Server', url: 'http://localhost:8080', env: 'Localhost' },
+  { label: 'Cloud Production API', url: 'https://eca-api-gateway-535026634701.us-central1.run.app', env: 'Cloud Run' },
+  { label: 'Enterprise Gateway (Static IP)', url: 'http://34.118.224.120:8080', env: 'Production' }
 ];
 
 const STORAGE_KEY = 'educloud_gateway_url';
@@ -49,14 +49,14 @@ export const checkGatewayHealth = async (customUrl = null) => {
       url: targetUrl
     };
   } catch (error) {
-    // Fallback: Check if /api/v1/courses or /api/v1/users is reachable
+    // Fallback: Check if /api/v1/courses is reachable
     try {
       const fallbackRes = await axios.get(`${targetUrl}/api/v1/courses`, { timeout: 4000 });
       const latency = Math.round(performance.now() - startTime);
       return {
         success: true,
         status: fallbackRes.status,
-        data: { status: 'UP (via Course API route)' },
+        data: { status: 'UP' },
         latency,
         url: targetUrl
       };
@@ -67,7 +67,7 @@ export const checkGatewayHealth = async (customUrl = null) => {
         return {
           success: true,
           status: userFallback.status,
-          data: { status: 'UP (via User API route)' },
+          data: { status: 'UP' },
           latency,
           url: targetUrl
         };
@@ -84,7 +84,7 @@ export const checkGatewayHealth = async (customUrl = null) => {
   }
 };
 
-// User Service APIs (Cloud SQL MySQL)
+// User Service APIs
 export const userService = {
   getAll: async () => {
     const api = createApiClient();
@@ -113,7 +113,7 @@ export const userService = {
   }
 };
 
-// Course Service APIs (MongoDB NoSQL)
+// Course Service APIs
 export const courseService = {
   getAll: async () => {
     const api = createApiClient();
@@ -142,7 +142,7 @@ export const courseService = {
   }
 };
 
-// Media Service APIs (Google Cloud Storage)
+// Media Service APIs
 export const mediaService = {
   upload: async (file, onProgress) => {
     const baseURL = getGatewayUrl();

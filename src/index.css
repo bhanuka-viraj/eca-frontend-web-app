@@ -5,88 +5,40 @@
 @layer base {
   body {
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background-color: #0b1120;
-    color: #f1f5f9;
+    background-color: #f8fafc;
+    color: #1e293b;
     overflow-x: hidden;
   }
-
-  code, pre {
-    font-family: 'JetBrains Mono', monospace;
-  }
 }
 
-/* Custom modern glassmorphism styling */
-.glass-panel {
-  background: rgba(15, 23, 42, 0.7);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* Light Card & Panel Styling */
+.course-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.glass-card {
-  background: rgba(17, 24, 39, 0.65);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+.course-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px -6px rgba(15, 23, 42, 0.08), 0 4px 8px -2px rgba(15, 23, 42, 0.04);
+  border-color: #cbd5e1;
 }
 
-.glass-card:hover {
-  background: rgba(30, 41, 59, 0.75);
-  border-color: rgba(99, 102, 241, 0.35);
-  box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.4), 0 0 15px -3px rgba(99, 102, 241, 0.15);
-  transform: translateY(-2px);
-}
-
-.glass-dropdown {
-  background: rgba(15, 23, 42, 0.92);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
-}
-
-/* Glowing effects */
-.glow-indigo {
-  box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.35);
-}
-
-.glow-cyan {
-  box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.35);
-}
-
-.glow-emerald {
-  box-shadow: 0 0 25px -5px rgba(16, 185, 129, 0.35);
-}
-
-/* Gradient text utility */
-.text-gradient {
-  background: linear-gradient(135deg, #a5b4fc 0%, #6366f1 50%, #38bdf8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.text-gradient-purple {
-  background: linear-gradient(135deg, #e0e7ff 0%, #a855f7 50%, #ec4899 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Custom Scrollbars */
+/* Custom Clean Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(11, 17, 32, 0.8);
+  background: #f1f5f9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(71, 85, 105, 0.5);
+  background: #cbd5e1;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(99, 102, 241, 0.6);
+  background: #94a3b8;
 }

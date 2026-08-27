@@ -4,102 +4,102 @@ import {
   BookOpen,
   Clock,
   Award,
-  Layers,
   CheckCircle2,
   PlayCircle,
   FileText,
   User,
+  Star,
   Sparkles,
-  ExternalLink
+  ArrowRight
 } from 'lucide-react';
 
-export default function SyllabusModal({ course, isOpen, onClose, onEnroll }) {
+export default function SyllabusModal({ course, isOpen, onClose, onEnroll, isEnrolled }) {
   if (!isOpen || !course) return null;
 
-  // Default syllabus modules if none provided
+  // Default syllabus modules
   const syllabusModules = course.syllabus && Array.isArray(course.syllabus) && course.syllabus.length > 0
     ? course.syllabus
     : [
         {
-          title: 'Module 1: Architecture Overview & Cloud Native Concepts',
+          title: 'Module 1: Foundations & Core Architecture Concepts',
           duration: '2.5 Hours',
           lessons: [
-            'Enterprise Microservices Topology on GCP',
-            'Spring Cloud Gateway & Non-blocking Reactive Routing',
-            'Domain Decomposition & Microservice Boundaries'
+            'Introduction & Learning Objectives Overview',
+            'Core Principles, Frameworks and Modern Paradigms',
+            'Setting Up Your Professional Development Environment'
           ]
         },
         {
-          title: 'Module 2: Containerization & Serverless Compute',
-          duration: '3.0 Hours',
-          lessons: [
-            'Multi-stage Docker Builds with Node & Nginx',
-            'Deploying Microservices to Google Cloud Run',
-            'Traffic Splitting, Auto-scaling & Resource Optimization'
-          ]
-        },
-        {
-          title: 'Module 3: Polyglot Persistence & Data Management',
+          title: 'Module 2: Practical Implementation & Guided Labs',
           duration: '3.5 Hours',
           lessons: [
-            'Relational User IAM on Google Cloud SQL (MySQL)',
-            'Document-driven Course Cataloging with MongoDB Atlas',
-            'Cloud Storage (GCS) for Scalable Media Assets'
+            'Building Scalable Components and Business Logic',
+            'Integration with Backend RESTful APIs & Data Stores',
+            'State Management, Security and Error Handling Best Practices'
           ]
         },
         {
-          title: 'Module 4: Observability, Security & Production Hardening',
-          duration: '2.0 Hours',
+          title: 'Module 3: Advanced Optimization & Production Deployment',
+          duration: '4.0 Hours',
           lessons: [
-            'Distributed Actuator Health Checks & Eureka Discovery',
-            'GCP Secret Manager & Zero-Trust IAM Policies',
-            'Continuous Integration & Deployment via Cloud Build'
+            'Performance Profiling & Bottleneck Optimization',
+            'Containerization and Automated CI/CD Pipelines',
+            'Zero-Downtime Releases and Production Monitoring'
+          ]
+        },
+        {
+          title: 'Module 4: Capstone Enterprise Project & Case Study',
+          duration: '3.0 Hours',
+          lessons: [
+            'Capstone Architecture Blueprint Review',
+            'End-to-End Enterprise Solution Implementation',
+            'Final Assessment, Code Review & Certificate Issuance'
           ]
         }
       ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="relative w-full max-w-3xl max-h-[90vh] bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden flex flex-col">
-        {/* Header with thumbnail backdrop */}
-        <div className="relative p-6 border-b border-slate-800 bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="relative w-full max-w-3xl max-h-[90vh] bg-white border border-slate-200 rounded-3xl shadow-2xl overflow-hidden flex flex-col">
+        {/* Header */}
+        <div className="p-6 border-b border-slate-100 bg-slate-50/70">
           <div className="flex items-start justify-between gap-4">
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
-                <span className="px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-md bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-                  {course.category || 'Cloud Architecture'}
+                <span className="px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-100">
+                  {course.category || 'Professional Course'}
                 </span>
-                <span className="px-2 py-0.5 text-[10px] font-semibold rounded bg-slate-800 text-slate-300 border border-slate-700">
+                <span className="px-2 py-0.5 text-[10px] font-semibold rounded-lg bg-slate-200 text-slate-700">
                   {course.level || 'Intermediate'}
                 </span>
               </div>
-              <h2 className="text-xl font-bold text-slate-100">{course.title}</h2>
-              <p className="text-xs text-slate-400 line-clamp-2">
-                {course.description || 'Master modern cloud-native architectures with hands-on labs and real-world microservice topologies.'}
+              <h2 className="text-xl font-bold text-slate-900 leading-snug">{course.title}</h2>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                {course.description || 'Master in-demand competencies through interactive modules, practical coding labs, and expert feedback.'}
               </p>
             </div>
 
             <button
               onClick={onClose}
-              className="p-1.5 text-slate-400 hover:text-slate-100 hover:bg-slate-800 rounded-lg transition"
+              className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-200 rounded-xl transition"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
-          {/* Quick Metrics */}
-          <div className="flex flex-wrap items-center gap-4 mt-4 pt-4 border-t border-slate-800/80 text-xs text-slate-300">
+          {/* Quick Metrics Strip */}
+          <div className="flex flex-wrap items-center gap-4 mt-4 pt-4 border-t border-slate-200/80 text-xs text-slate-600">
             <div className="flex items-center space-x-1.5">
-              <Clock className="w-3.5 h-3.5 text-cyan-400" />
-              <span>{course.duration || '12 Hours on-demand'}</span>
+              <Clock className="w-4 h-4 text-indigo-600" />
+              <span className="font-medium">{course.duration || '14 Hours on-demand video'}</span>
             </div>
             <div className="flex items-center space-x-1.5">
-              <User className="w-3.5 h-3.5 text-indigo-400" />
-              <span>Instructor: {course.instructor || 'EduCloud Master Faculty'}</span>
+              <User className="w-4 h-4 text-indigo-600" />
+              <span>Instructor: <strong className="text-slate-800 font-semibold">{course.instructor || 'Academy Faculty'}</strong></span>
             </div>
             <div className="flex items-center space-x-1.5">
-              <Award className="w-3.5 h-3.5 text-amber-400" />
-              <span>Certificate of Completion</span>
+              <Award className="w-4 h-4 text-amber-500" />
+              <span>Official Certificate of Completion</span>
             </div>
           </div>
         </div>
@@ -107,12 +107,12 @@ export default function SyllabusModal({ course, isOpen, onClose, onEnroll }) {
         {/* Syllabus Content */}
         <div className="p-6 overflow-y-auto space-y-4 flex-1">
           <div className="flex items-center justify-between">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center space-x-2">
-              <BookOpen className="w-4 h-4 text-indigo-400" />
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center space-x-2">
+              <BookOpen className="w-4 h-4 text-indigo-600" />
               <span>Curriculum & Module Breakdown</span>
             </h3>
-            <span className="text-xs text-slate-400 font-mono">
-              {syllabusModules.length} Modules • Comprehensive
+            <span className="text-xs text-slate-500 font-medium">
+              {syllabusModules.length} Modules • Lifetime Access
             </span>
           </div>
 
@@ -120,32 +120,32 @@ export default function SyllabusModal({ course, isOpen, onClose, onEnroll }) {
             {syllabusModules.map((mod, idx) => (
               <div
                 key={idx}
-                className="p-4 rounded-xl bg-slate-950/50 border border-slate-800 hover:border-slate-700 transition space-y-2.5"
+                className="p-4 rounded-2xl bg-slate-50 border border-slate-200 hover:border-indigo-200 transition space-y-2.5"
               >
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2.5">
-                    <div className="w-6 h-6 rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 flex items-center justify-center text-xs font-bold font-mono">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-7 h-7 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-xs font-bold">
                       {idx + 1}
                     </div>
-                    <span className="text-sm font-semibold text-slate-200">
+                    <span className="text-sm font-bold text-slate-800">
                       {typeof mod === 'string' ? mod : mod.title}
                     </span>
                   </div>
                   {mod.duration && (
-                    <span className="text-[11px] font-mono text-slate-400 bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
+                    <span className="text-[11px] font-medium text-slate-500 bg-white px-2.5 py-1 rounded-lg border border-slate-200">
                       {mod.duration}
                     </span>
                   )}
                 </div>
 
                 {mod.lessons && Array.isArray(mod.lessons) && (
-                  <div className="pl-8 space-y-1.5 pt-1">
+                  <div className="pl-10 space-y-2 pt-1">
                     {mod.lessons.map((lesson, lIdx) => (
                       <div
                         key={lIdx}
-                        className="flex items-center space-x-2 text-xs text-slate-400"
+                        className="flex items-center space-x-2.5 text-xs text-slate-600"
                       >
-                        <PlayCircle className="w-3.5 h-3.5 text-slate-500 flex-shrink-0" />
+                        <PlayCircle className="w-4 h-4 text-indigo-500 flex-shrink-0" />
                         <span>{lesson}</span>
                       </div>
                     ))}
@@ -158,14 +158,14 @@ export default function SyllabusModal({ course, isOpen, onClose, onEnroll }) {
           {/* Tags */}
           {course.tags && Array.isArray(course.tags) && course.tags.length > 0 && (
             <div className="pt-2">
-              <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-2">
-                Technologies & Competencies
+              <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">
+                Key Skills & Competencies Taught
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {course.tags.map((t, idx) => (
                   <span
                     key={idx}
-                    className="text-xs font-mono px-2.5 py-1 rounded-lg bg-slate-800/80 text-indigo-300 border border-indigo-500/20"
+                    className="text-xs font-medium px-3 py-1 rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-100"
                   >
                     #{t}
                   </span>
@@ -176,10 +176,10 @@ export default function SyllabusModal({ course, isOpen, onClose, onEnroll }) {
         </div>
 
         {/* Footer Actions */}
-        <div className="px-6 py-4 border-t border-slate-800 bg-slate-950/80 flex items-center justify-between">
+        <div className="px-6 py-4 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition"
+            className="px-4 py-2.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 text-xs font-semibold transition"
           >
             Close
           </button>
@@ -189,10 +189,23 @@ export default function SyllabusModal({ course, isOpen, onClose, onEnroll }) {
               onEnroll?.(course);
               onClose();
             }}
-            className="flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-semibold text-xs shadow-lg shadow-indigo-500/25 transition"
+            className={`flex items-center space-x-2 px-6 py-2.5 rounded-xl font-bold text-xs shadow-md transition ${
+              isEnrolled
+                ? 'bg-emerald-600 text-white hover:bg-emerald-700'
+                : 'bg-indigo-600 hover:bg-indigo-700 text-white'
+            }`}
           >
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Enroll Now (Free Enterprise Access)</span>
+            {isEnrolled ? (
+              <>
+                <CheckCircle2 className="w-4 h-4" />
+                <span>Enrolled • Continue in My Learning</span>
+              </>
+            ) : (
+              <>
+                <Sparkles className="w-4 h-4" />
+                <span>Enroll in Course</span>
+              </>
+            )}
           </button>
         </div>
       </div>
