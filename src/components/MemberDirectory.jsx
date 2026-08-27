@@ -17,50 +17,6 @@ import {
 } from 'lucide-react';
 import { userService } from '../services/api';
 
-// Verified LMS seed members
-const SEED_USERS = [
-  {
-    id: 1,
-    name: 'J P Bhanuka Viraj Madhuranga',
-    email: 'bhanuka.viraj@edusphere.io',
-    role: 'INSTRUCTOR',
-    department: 'Cloud & Software Engineering',
-    createdAt: '2026-08-15'
-  },
-  {
-    id: 2,
-    name: 'Dr. Elena Rostova',
-    email: 'elena.rostova@edusphere.io',
-    role: 'INSTRUCTOR',
-    department: 'Data Science & Machine Learning',
-    createdAt: '2026-08-18'
-  },
-  {
-    id: 3,
-    name: 'Sarah Chen',
-    email: 'sarah.chen@student.edusphere.io',
-    role: 'STUDENT',
-    department: 'DevOps & Cloud Systems',
-    createdAt: '2026-08-20'
-  },
-  {
-    id: 4,
-    name: 'Marcus Vance',
-    email: 'marcus.v@student.edusphere.io',
-    role: 'STUDENT',
-    department: 'UI/UX & Product Design',
-    createdAt: '2026-08-22'
-  },
-  {
-    id: 5,
-    name: 'David Reynolds',
-    email: 'admin@edusphere.io',
-    role: 'ADMIN',
-    department: 'Academic Operations & Governance',
-    createdAt: '2026-08-01'
-  }
-];
-
 export default function MemberDirectory({ onNotify }) {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -81,14 +37,18 @@ export default function MemberDirectory({ onNotify }) {
     setLoading(true);
     try {
       const data = await userService.getAll();
-      if (Array.isArray(data) && data.length > 0) {
+      if (Array.isArray(data)) {
         setUsers(data);
       } else {
-        setUsers(SEED_USERS);
+        setUsers([]);
       }
     } catch (error) {
-      console.warn('API error loading users, using fallback seed data:', error);
-      setUsers(SEED_USERS);
+      console.error('API error loading users from database:', error);
+      onNotify?.({
+        type: 'error',
+        message: 'Could not load academy members from database.'
+      });
+      setUsers([]);
     } finally {
       setLoading(false);
     }

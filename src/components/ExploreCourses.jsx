@@ -20,94 +20,6 @@ import {
 import { courseService } from '../services/api';
 import SyllabusModal from './SyllabusModal';
 
-// Professional LMS Seed Courses
-const SEED_COURSES = [
-  {
-    id: 'course-1',
-    title: 'Cloud Computing & Distributed Systems Architecture',
-    category: 'Cloud Computing',
-    description: 'Learn modern cloud architectures, serverless computing, microservice orchestration, and high-availability enterprise design principles.',
-    tags: ['Cloud', 'Microservices', 'Distributed Systems', 'DevOps'],
-    instructor: 'Prof. Viraj Madhuranga',
-    level: 'Advanced',
-    duration: '16 Hours',
-    rating: 4.9,
-    reviewsCount: 520,
-    studentsCount: '2,450',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop'
-  },
-  {
-    id: 'course-2',
-    title: 'Full-Stack Software Engineering with Modern Frameworks',
-    category: 'Software Engineering',
-    description: 'Master end-to-end web applications, robust RESTful APIs, modern reactive frontend architecture, and production deployment pipelines.',
-    tags: ['React', 'Node.js', 'TypeScript', 'WebDev'],
-    instructor: 'Sarah Chen',
-    level: 'Intermediate',
-    duration: '22 Hours',
-    rating: 4.8,
-    reviewsCount: 380,
-    studentsCount: '1,890',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop'
-  },
-  {
-    id: 'course-3',
-    title: 'Data Science, Machine Learning & Predictive Analytics',
-    category: 'Data Science',
-    description: 'From exploratory data analysis and statistics to neural networks and deep learning models with industry-standard Python libraries.',
-    tags: ['Python', 'Machine Learning', 'Data Analysis', 'AI'],
-    instructor: 'Dr. Elena Rostova',
-    level: 'Intermediate',
-    duration: '18 Hours',
-    rating: 4.9,
-    reviewsCount: 610,
-    studentsCount: '3,120',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop'
-  },
-  {
-    id: 'course-4',
-    title: 'UI/UX Design Systems & Product Experience Strategy',
-    category: 'Design',
-    description: 'Create intuitive, accessible user experiences, interactive prototypes, user research frameworks, and scalable design component libraries.',
-    tags: ['UI/UX', 'Figma', 'Product Design', 'User Research'],
-    instructor: 'Marcus Vance',
-    level: 'Beginner',
-    duration: '10 Hours',
-    rating: 4.7,
-    reviewsCount: 290,
-    studentsCount: '1,420',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=800&auto=format&fit=crop'
-  },
-  {
-    id: 'course-5',
-    title: 'Executive Technology Leadership & Agile Product Management',
-    category: 'Business',
-    description: 'Learn strategic technology roadmapping, agile team scaling, digital transformation, and cross-functional leadership execution.',
-    tags: ['Leadership', 'Agile', 'Strategy', 'Management'],
-    instructor: 'David Reynolds',
-    level: 'Advanced',
-    duration: '14 Hours',
-    rating: 4.9,
-    reviewsCount: 440,
-    studentsCount: '2,100',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=800&auto=format&fit=crop'
-  },
-  {
-    id: 'course-6',
-    title: 'Enterprise DevOps, Container Pipelines & SRE Practices',
-    category: 'Software Engineering',
-    description: 'Automate build pipelines, continuous integration, infrastructure as code, container management, and reliability monitoring.',
-    tags: ['DevOps', 'CI/CD', 'Containers', 'Monitoring'],
-    instructor: 'Alex Rivera',
-    level: 'Intermediate',
-    duration: '15 Hours',
-    rating: 4.8,
-    reviewsCount: 310,
-    studentsCount: '1,650',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?q=80&w=800&auto=format&fit=crop'
-  }
-];
-
 export default function ExploreCourses({
   onNotify,
   onNavigateToStudio,
@@ -134,15 +46,18 @@ export default function ExploreCourses({
     setLoading(true);
     try {
       const data = await courseService.getAll();
-      if (Array.isArray(data) && data.length > 0) {
-        // Merge with seed courses if needed or use live data
+      if (Array.isArray(data)) {
         setCourses(data);
       } else {
-        setCourses(SEED_COURSES);
+        setCourses([]);
       }
     } catch (error) {
-      console.warn('Backend unavailable, showing verified course catalog:', error);
-      setCourses(SEED_COURSES);
+      console.error('Error fetching courses from database:', error);
+      onNotify?.({
+        type: 'error',
+        message: 'Could not load courses from database.'
+      });
+      setCourses([]);
     } finally {
       setLoading(false);
     }
