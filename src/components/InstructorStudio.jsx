@@ -26,6 +26,7 @@ export default function InstructorStudio({ onNotify, onCourseCreated }) {
     description: '',
     tags: 'React, Cloud, System Design',
     instructor: 'Bhanuka Viraj',
+    instructorId: 1,
     level: 'Intermediate',
     duration: '14 Hours',
     thumbnailUrl: ''
@@ -67,9 +68,7 @@ export default function InstructorStudio({ onNotify, onCourseCreated }) {
         category: formData.category,
         description: formData.description,
         tags: tagsArray,
-        instructor: formData.instructor,
-        level: formData.level,
-        duration: formData.duration,
+        instructorId: Number(formData.instructorId) || 1,
         thumbnailUrl: formData.thumbnailUrl || null
       };
 
