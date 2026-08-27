@@ -3,7 +3,7 @@ import axios from 'axios';
 // Default gateway presets
 export const DEFAULT_GATEWAY_URLS = [
   { label: 'Cloud Run Proxy (HTTPS Same-Origin)', url: '', env: 'Production Cloud Run' },
-  { label: 'Cloud Gateway (Direct VM)', url: 'http://34.134.152.53:8080', env: 'Compute Engine' },
+  { label: 'Cloud Gateway Load Balancer', url: 'http://34.160.86.95', env: 'Global Load Balancer' },
   { label: 'Local Development Server', url: 'http://localhost:8080', env: 'Localhost' }
 ];
 
